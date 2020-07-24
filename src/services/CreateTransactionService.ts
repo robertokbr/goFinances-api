@@ -2,6 +2,7 @@ import { getCustomRepository, getRepository } from 'typeorm';
 import Transaction from '../models/Transaction';
 import TransactionRepository from '../repositories/TransactionsRepository';
 import Category from '../models/Category';
+import AppError from '../errors/AppError';
 
 interface Request {
   title: string;
@@ -21,7 +22,7 @@ class CreateTransactionService {
     const { total } = await transactionRepository.getBalance();
 
     if (type === 'outcome' && value > total) {
-      throw new Error("You don't have founds enought");
+      throw new AppError("You don't have founds enought", 400);
     }
 
     const categoryRepository = getRepository(Category);

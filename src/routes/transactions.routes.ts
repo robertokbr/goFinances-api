@@ -8,16 +8,16 @@ import Category from '../models/Category';
 
 const transactionsRouter = Router();
 
-transactionsRouter.get('/', async (request, response) => {
-  const transactionRepository = getCustomRepository(TransactionsRepository);
-  const balance = await transactionRepository.getBalance();
-  const categoryRepository = getRepository(Category);
-  const transactions = await transactionRepository.find({
-    join: { Category },
-    where: { category_id, id },
-    select: {},
-  });
-});
+// transactionsRouter.get('/', async (request, response) => {
+//   const transactionRepository = getCustomRepository(TransactionsRepository);
+//   const balance = await transactionRepository.getBalance();
+//   const categoryRepository = getRepository(Category);
+//   const transactions = await transactionRepository.find({
+//     join: { Category },
+//     where: { category_id, id },
+//     select: {},
+//   });
+// });
 
 transactionsRouter.post('/', async (request, response) => {
   const { title, value, type, category } = request.body;
@@ -35,11 +35,12 @@ transactionsRouter.post('/', async (request, response) => {
 transactionsRouter.delete('/:id', async (request, response) => {
   const { id } = request.params;
   const deletReturn = new DeleteTransactionService();
-  const response = deletReturn.execute(id);
+  await deletReturn.execute(id);
+  return response.status(204);
 });
 
-transactionsRouter.post('/import', async (request, response) => {
-  // TODO
-});
+// transactionsRouter.post('/import', async (request, response) => {
+//   // TODO
+// });
 
 export default transactionsRouter;
