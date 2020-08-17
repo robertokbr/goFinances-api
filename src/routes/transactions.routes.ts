@@ -8,7 +8,7 @@ import uploadConfig from '../config/upload';
 import multer from 'multer';
 import path from 'path';
 
-import ImportTransactionsService from '../services/ImportTransactionsService';
+// import ImportTransactionsService from '../services/ImportTransactionsService';
 // import ImportTransactionsService from '../services/ImportTransactionsService';
 
 const transactionsRouter = Router();
@@ -16,20 +16,17 @@ const upload = multer(uploadConfig);
 
 transactionsRouter.get('/', async (request, response) => {
   const transactionRepository = getCustomRepository(TransactionsRepository);
-  const categoryRepository = getRepository(Category);
-
   const balance = await transactionRepository.getBalance();
-  const transactionsWithoutBalance = await transactionRepository.find();
-  // const transaction = transactionsWithoutBalance.map( transaction =>)
+  const transactions = await transactionRepository.find();
 
-
+return response.json({transactions, balance})
 });
 
 transactionsRouter.post('/', async (request, response) => {
   const { title, value, type, category } = request.body;
 
   const createTransaction = new CreateTransactionService();
-  const transaction = createTransaction.execute({
+  const transaction = await createTransaction.execute({
     title,
     value,
     type,
@@ -49,13 +46,13 @@ transactionsRouter.delete('/:id', async (request, response) => {
   return response.status(204);
 });
 
-transactionsRouter.post('/import',upload.single('file') ,
- async (request, response) => {
-const adress = path.resolve(__dirname, '..','..', 'tmp','4e32df26139d9927ea-logo.pnga-logo.png')
-const importTransactions = new ImportTransactionsService();
+// transactionsRouter.post('/import',upload.single('file') ,
+//  async (request, response) => {
+// const adress = path.resolve(__dirname, '..','..', 'tmp','4e32df26139d9927ea-logo.pnga-logo.png')
+// const importTransactions = new ImportTransactionsService();
 
-const transactions = importTransactions.execute(request.file.path);
+// const transactions = importTransactions.execute(request.file.path);
 
-});
+// });
 
 export default transactionsRouter;
