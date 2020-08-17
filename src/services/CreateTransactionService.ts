@@ -28,7 +28,7 @@ class CreateTransactionService {
     const categoryRepository = getRepository(Category);
 
     const categoryAlreadyExists = await categoryRepository.findOne({
-      where: { title, category },
+      where: { title: category },
     });
 
     if (categoryAlreadyExists) {
@@ -49,7 +49,6 @@ class CreateTransactionService {
       title,
       value,
       type,
-      category_id: newCategory.id,
     });
     await transactionRepository.save(transaction);
     return transaction;
