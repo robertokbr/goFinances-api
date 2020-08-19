@@ -5,7 +5,7 @@ export default class CreateTransactions1593536552427
   public async up(queryRunner: QueryRunner): Promise<void> {
     await queryRunner.createTable(
       new Table({
-        name: 'transaction',
+        name: 'transactions',
         columns: [
           {
             name: 'id',

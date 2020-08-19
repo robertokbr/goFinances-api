@@ -8,8 +8,6 @@ import uploadConfig from '../config/upload';
 import multer from 'multer';
 import path from 'path';
 
-// import ImportTransactionsService from '../services/ImportTransactionsService';
-// import ImportTransactionsService from '../services/ImportTransactionsService';
 
 const transactionsRouter = Router();
 const upload = multer(uploadConfig);
