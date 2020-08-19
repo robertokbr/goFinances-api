@@ -7,6 +7,7 @@ import Category from '../models/Category';
 import uploadConfig from '../config/upload';
 import multer from 'multer';
 import path from 'path';
+import ImportTransactionsService from '../services/ImportTransactionsService';
 
 
 const transactionsRouter = Router();
@@ -44,13 +45,12 @@ transactionsRouter.delete('/:id', async (request, response) => {
   return response.status(204);
 });
 
-// transactionsRouter.post('/import',upload.single('file') ,
-//  async (request, response) => {
-// const adress = path.resolve(__dirname, '..','..', 'tmp','4e32df26139d9927ea-logo.pnga-logo.png')
-// const importTransactions = new ImportTransactionsService();
-
-// const transactions = importTransactions.execute(request.file.path);
-
-// });
+transactionsRouter.post('/import',upload.single('file') ,
+ async (request, response) => {
+const adress = path.resolve(__dirname, '..','..', 'tmp','4e32df26139d9927ea-logo.pnga-logo.png')
+const importTransactions = new ImportTransactionsService();
+const transactions = importTransactions.execute(request.file.path);
+return transactions;
+});
 
 export default transactionsRouter;
