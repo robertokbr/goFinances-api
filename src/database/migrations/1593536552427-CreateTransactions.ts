@@ -31,6 +31,7 @@ export default class CreateTransactions1593536552427
           {
             name: 'category_id',
             type: 'uuid',
+            isNullable: true,
           },
           {
             name: 'created_at',
