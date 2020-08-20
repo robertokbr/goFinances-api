@@ -33,13 +33,13 @@ class ImportTransactionsService {
       ));
         if(!title || !type || !value ) return;
 
-        category.push(category);
+        categories.push(category);
         transactions.push({title, type, value, category});
 
     })
     await new Promise( resolve => parseCSV.on('end', resolve));
 
-    const categoryExists = await categoryRepository.find({ where:{ category: In(categories)}});
+    const categoryExists = await categoryRepository.find({ where:{ title: In(categories)}});
     const categoryExistsTitle = categoryExists.map( category => category.title);
 
     const addCategory = categories.filter( category => !categoryExistsTitle.includes(category))
